@@ -12,7 +12,7 @@ mariadb_instances: 1                                            # mariadb : inst
 mariadb_vm_type: "minimal"                                      # mariadb : vm type
 mariadb_persistent_disk_type: "10GB"                            # mariadb : persistent disk type
 mariadb_port: "<MARIADB_PORT>"                                  # mariadb : database port (e.g. 13306) -- Do Not Use "3306"
-mariadb_admin_password: "<MARIADB_ADMIN_PASSWORD>"              # mariadb : database admin password (e.g. "Paasta@2019")
+mariadb_admin_password: "<MARIADB_ADMIN_PASSWORD>"              # mariadb : database admin password (e.g. "Kpaas@2019")
 
 # HAPROXY INFO
 haproxy_azs: [z7]                                               # haproxy : azs
@@ -27,10 +27,10 @@ binary_storage_instances: 1                                     # binary storage
 binary_storage_vm_type: "minimal"                               # binary storage : vm type
 binary_storage_persistent_disk_type: "10GB"                     # binary storage : persistent disk type
 binary_storage_auth_port: "<BINARY_STORAGE_AUTH_PORT>"          # binary storage : keystone port (e.g. 15001) -- Do Not Use "5000"
-binary_storage_username: "<BINARY_STORAGE_USERNAME>"            # binary storage : username (e.g. "paasta-portal")
-binary_storage_password: "<BINARY_STORAGE_PASSWORD>"            # binary storage : password (e.g. "paasta")
-binary_storage_tenantname: "<BINARY_STORAGE_TENANTNAME>"        # binary storage : tenantname (e.g. "paasta-portal")
-binary_storage_email: "<BINARY_STORAGE_EMAIL>"                  # binary storage : email (e.g. "paasta@paasta.com")
+binary_storage_username: "<BINARY_STORAGE_USERNAME>"            # binary storage : username (e.g. "kpaas-portal")
+binary_storage_password: "<BINARY_STORAGE_PASSWORD>"            # binary storage : password (e.g. "kpaas")
+binary_storage_tenantname: "<BINARY_STORAGE_TENANTNAME>"        # binary storage : tenantname (e.g. "kpaas-portal")
+binary_storage_email: "<BINARY_STORAGE_EMAIL>"                  # binary storage : email (e.g. "kpaas@kpaas.com")
 
 # PORTAL_GATEWAY INFO
 gateway_azs: [z6]                                               # gateway : azs
@@ -86,4 +86,4 @@ mail_smtp_useremail: "<MAIL_SMTP_USER_EMAIL>"                   # mail-smtp : us
 mail_smtp_properties_auth: "true"                               # mail-smtp : properties auth
 mail_smtp_properties_starttls_enable: "true"                    # mail-smtp : properties starttls enable
 mail_smtp_properties_starttls_required: "true"                  # mail-smtp : properties starttls required
-mail_smtp_properties_subject: "<MAIL_SMTP_PROPERTIES_SUBJECT>"  # mail-smtp : properties subject (e.g. "PaaS-TA User Potal")
+mail_smtp_properties_subject: "<MAIL_SMTP_PROPERTIES_SUBJECT>"  # mail-smtp : properties subject (e.g. "K-PaaS User Potal")

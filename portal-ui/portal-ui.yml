@@ -7,8 +7,8 @@ stemcells:
   version: ((stemcell_version))
 
 releases:
-- name: paasta-portal-ui-release                          # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
-  url: https://nextcloud.paas-ta.org/index.php/s/Fr7A5Yo2iWoggdD/download
+- name: ap-portal-ui-release                          # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
+  url: https://nextcloud.k-paas.org/index.php/s/Fr7A5Yo2iWoggdD/download
   sha1: b6d02049ec580c545ccea4228e4bcdf72f5e6422
   version: "2.5.16"
 
@@ -31,7 +31,7 @@ instance_groups:
   - name: ((private_networks_name))
   jobs:
   - name: mariadb
-    release: paasta-portal-ui-release
+    release: ap-portal-ui-release
 
 - name: haproxy
   azs: ((haproxy_azs))
@@ -44,7 +44,7 @@ instance_groups:
     static_ips: ((haproxy_public_ips))
   jobs:
   - name: haproxy
-    release: paasta-portal-ui-release
+    release: ap-portal-ui-release
   properties:
     infra:
       admin:
@@ -52,7 +52,7 @@ instance_groups:
 
 ######## WEB SERVICE ########
 
-- name: paas-ta-portal-webadmin
+- name: ap-portal-webadmin
   azs: ((webadmin_azs))
   instances: ((webadmin_instances))
   vm_type: ((webadmin_vm_type))
@@ -60,8 +60,8 @@ instance_groups:
   networks:
   - name: ((private_networks_name))
   jobs:
-  - name: paas-ta-portal-webadmin
-    release: paasta-portal-ui-release
+  - name: ap-portal-webadmin
+    release: ap-portal-ui-release
   properties:
     java_opts: "-Xmx450m -Xss1M -XX:MaxMetaspaceSize=93382K -XX:ReservedCodeCacheSize=240m -XX:+UseCompressedOops -Djdk.tls.ephemeralDHKeySize=2048 -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Xverify:none -XX:ErrorFile=/var/vcap/sys/log/java_error_in_idea_%p.log -XX:HeapDumpPath=/var/vcap/sys/log/java_error_in_idea.hprof"
     api:
@@ -69,7 +69,7 @@ instance_groups:
     port: 8090
     languageList: ((portal_web_admin_language))
 
-- name: paas-ta-portal-webuser
+- name: ap-portal-webuser
   azs: ((webuser_azs))
   instances: ((webuser_instances))
   vm_type: ((webuser_vm_type))
@@ -77,10 +77,10 @@ instance_groups:
   networks:
   - name: ((private_networks_name))
   jobs:
-  - name: paas-ta-portal-webuser
-    release: paasta-portal-ui-release
+  - name: ap-portal-webuser
+    release: ap-portal-ui-release
   properties:
-    logPath: "/var/vcap/sys/log/paas-ta-portal-webuser"     # WEBUSER는 아파치를 사용함, APACHE 로그 위치
+    logPath: "/var/vcap/sys/log/ap-portal-webuser"     # WEBUSER는 아파치를 사용함, APACHE 로그 위치
     webDir: "/var/vcap/packages/apache2/htdocs"             # WEBUSER는 아파치를 사용함, APACHE 웹 디렉토리 설정
     cf:
       uaa:
@@ -91,7 +91,7 @@ instance_groups:
     ssh_uri: "https://ssh-app.((system_domain))/"
     ssh_enable: ((ssh_enable))
     user_app_size_mb: ((user_app_size))
-    paastaType: ((paasta_deployment_type))
+    apType: ((ap_deployment_type))
     languageList: ((portal_web_user_language))
 
 properties:
@@ -107,7 +107,7 @@ properties:
     uaa_url: "https://uaa.((system_domain))"
     header_auth: "((portal_default_header_auth))"
     desc: "((portal_default_api_desc))"
-  cf_api_version: ((paasta_api_version))
+  cf_api_version: ((ap_api_version))
   webadmin_ips: ((haproxy_public_ips))
   limit_request_body: ((apache_limit_request_body))
   usr_limit_request_body: ((apache_usr_limit_request_body))

@@ -3,7 +3,7 @@
 source portal-app-variable.yml
 
 PORTALAPPNAME=portal-app-1.2.14
-PORTALAPPDOWNLOADLINK=https://nextcloud.paas-ta.org/index.php/s/3m4Ec4isPT7q7gQ/download
+PORTALAPPDOWNLOADLINK=https://nextcloud.k-paas.org/index.php/s/3m4Ec4isPT7q7gQ/download
 
 #########################################
 # Portal Component Folder Name
@@ -105,8 +105,8 @@ PORTAL_WEB_ADMIN_USE_LANG=$(echo "${PORTAL_WEB_ADMIN_LANGUAGE[*]}" | sed 's/ /,/
 
 # VARIABLE SETTING
 DOMAIN=$(grep -r "system_domain" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -f 1 | sed -e 's/ //g' | sed -e 's/\"//g' )
-CF_USER_ADMIN_USERNAME=$(grep -r "paasta_admin_username" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -f 1 | sed -e 's/ //g' | sed -e 's/\"//g')
-CF_USER_ADMIN_PASSWORD=$(grep -r "paasta_admin_password" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -f 1 | sed -e 's/ //g' | sed -e 's/\"//g')
+CF_USER_ADMIN_USERNAME=$(grep -r "ap_admin_username" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -f 1 | sed -e 's/ //g' | sed -e 's/\"//g')
+CF_USER_ADMIN_PASSWORD=$(grep -r "ap_admin_password" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -f 1 | sed -e 's/ //g' | sed -e 's/\"//g')
 UAA_ADMIN_CLIENT_SECRET=$(grep -r "uaa_client_admin_secret" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -f 1 | sed -e 's/ //g' | sed -e 's/\"//g')
 
 ## PORTAL DB
@@ -133,41 +133,41 @@ MONITORING_API_URL=$(grep -r "monitoring_api_url" $COMMON_VARS_PATH | cut -d ':'
 
 
 ## AP DB
-if [[ ${IS_PAAS_TA_EXTERNAL_DB} = "false" ]]; then
+if [[ ${IS_AP_EXTERNAL_DB} = "false" ]]; then
         # AP - Internal DB use
-        if [[ -n $(bosh is --ps -d $PAASTA_CORE_DEPLOYMENT_NAME | grep $PAASTA_DATABASE_INSTANCE_NAME | grep "postgres") ]]; then
-                PAASTA_DB_DRIVER=org.postgresql.Driver
-                PAASTA_DATABASE=postgresql
-        elif [[ -n $(bosh is --ps -d $PAASTA_CORE_DEPLOYMENT_NAME | grep $PAASTA_DATABASE_INSTANCE_NAME | grep "galera") ]]; then
-                PAASTA_DB_DRIVER=com.mysql.jdbc.Driver
-                PAASTA_DATABASE=mysql
+        if [[ -n $(bosh is --ps -d $AP_CORE_DEPLOYMENT_NAME | grep $AP_DATABASE_INSTANCE_NAME | grep "postgres") ]]; then
+                AP_DB_DRIVER=org.postgresql.Driver
+                AP_DATABASE=postgresql
+        elif [[ -n $(bosh is --ps -d $AP_CORE_DEPLOYMENT_NAME | grep $AP_DATABASE_INSTANCE_NAME | grep "galera") ]]; then
+                AP_DB_DRIVER=com.mysql.jdbc.Driver
+                AP_DATABASE=mysql
         fi
-        PAASTA_DB_IP=$(bosh vms -d $PAASTA_CORE_DEPLOYMENT_NAME | grep $PAASTA_DATABASE_INSTANCE_NAME | cut -f 4 | head -n 1 | sed -e 's/ //g')
-        PAASTA_DB_PORT=$(grep -r "paasta_database_port" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -f 1 | sed -e 's/ //g' | sed -e 's/\"//g')
+        AP_DB_IP=$(bosh vms -d $AP_CORE_DEPLOYMENT_NAME | grep $AP_DATABASE_INSTANCE_NAME | cut -f 4 | head -n 1 | sed -e 's/ //g')
+        AP_DB_PORT=$(grep -r "ap_database_port" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -f 1 | sed -e 's/ //g' | sed -e 's/\"//g')
 
-elif [[ ${IS_PAAS_TA_EXTERNAL_DB} = "true" ]]; then
+elif [[ ${IS_AP_EXTERNAL_DB} = "true" ]]; then
         # AP - External DB use
-        if [[ $PAAS_TA_EXTERNAL_DB_KIND = "postgres" ]]; then
-                PAASTA_DB_DRIVER=org.postgresql.Driver
-                PAASTA_DATABASE=postgresql
-        elif [[ $PAAS_TA_EXTERNAL_DB_KIND = "mysql" ]]; then
-                PAASTA_DB_DRIVER=com.mysql.jdbc.Driver
-                PAASTA_DATABASE=mysql
+        if [[ $AP_EXTERNAL_DB_KIND = "postgres" ]]; then
+                AP_DRIVER=org.postgresql.Driver
+                AP_DATABASE=postgresql
+        elif [[ $AP_EXTERNAL_DB_KIND = "mysql" ]]; then
+                AP_DB_DRIVER=com.mysql.jdbc.Driver
+                AP_DATABASE=mysql
         else
-                echo "plz check IS_PAAS_TA_EXTERNAL_DB & PAAS_TA_EXTERNAL_DB_KIND"
+                echo "plz check IS_AP_EXTERNAL_DB & AP_EXTERNAL_DB_KIND"
                 return
         fi
 
-        PAASTA_DB_IP=$PAAS_TA_EXTERNAL_DB_IP
-        PAASTA_DB_PORT=$PAAS_TA_EXTERNAL_DB_PORT
+        AP_DB_IP=$AP_EXTERNAL_DB_IP
+        AP_DB_PORT=$AP_EXTERNAL_DB_PORT
 else
-        # unknown IS_PAAS_TA_EXTERNAL_DB value
-        echo "plz check IS_PAAS_TA_EXTERNAL_DB"
+        # unknown IS_AP_EXTERNAL_DB value
+        echo "plz check IS_AP_EXTERNAL_DB"
         return
 fi
 
-CC_DB_USER_PASSWORD=$(grep -r "paasta_cc_db_password" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -f 1 | sed -e 's/ //g' | sed -e 's/\"//g')
-UAA_DB_USER_PASSWORD=$(grep -r "paasta_uaa_db_password" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -f 1 | sed -e 's/ //g' | sed -e 's/\"//g')
+CC_DB_USER_PASSWORD=$(grep -r "ap_cc_db_password" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -f 1 | sed -e 's/ //g' | sed -e 's/\"//g')
+UAA_DB_USER_PASSWORD=$(grep -r "ap_uaa_db_password" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -f 1 | sed -e 's/ //g' | sed -e 's/\"//g')
 MAIL_SMTP_PROPERTIES_AUTHURL=portal-web-user.$(grep -r "system_domain" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -f 1 | sed -e 's/ //g' | sed -e 's/\"//g')
 
 ## OBJECT STORAGE
@@ -324,17 +324,17 @@ find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_API/manifest.yml -type
 
 
 ## PORTAL-COMMON-API
-# PAASTA_DB_DRIVER
-find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_COMMON_API/manifest.yml -type f | xargs sed -i -e 's/<PAAS-TA_DB_DRIVER>/'${PAASTA_DB_DRIVER}'/g'
+# AP_DB_DRIVER
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_COMMON_API/manifest.yml -type f | xargs sed -i -e 's/<AP_DB_DRIVER>/'${AP_DB_DRIVER}'/g'
 
-# PAASTA_DATABASE
-find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_COMMON_API/manifest.yml -type f | xargs sed -i -e 's/<PAAS-TA_DATABASE>/'${PAASTA_DATABASE}'/g'
+# AP_DATABASE
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_COMMON_API/manifest.yml -type f | xargs sed -i -e 's/<AP_DATABASE>/'${AP_DATABASE}'/g'
 
-# PAASTA_DB_IP
-find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_COMMON_API/manifest.yml -type f | xargs sed -i -e "s/<PAAS-TA_DB_IP>/$PAASTA_DB_IP/g"
+# AP_DB_IP
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_COMMON_API/manifest.yml -type f | xargs sed -i -e "s/<AP_DB_IP>/$AP_DB_IP/g"
 
-# PAASTA_DB_PORT
-find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_COMMON_API/manifest.yml -type f | xargs sed -i -e 's/<PAAS-TA_DB_PORT>/'${PAASTA_DB_PORT}'/g'
+# AP_DB_PORT
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_COMMON_API/manifest.yml -type f | xargs sed -i -e 's/<AP_DB_PORT>/'${AP_DB_PORT}'/g'
 
 # CC_DB_NAME
 find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_COMMON_API/manifest.yml -type f | xargs sed -i -e 's/<CC_DB_NAME>/'${CC_DB_NAME}'/g'
@@ -375,7 +375,7 @@ find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_COMMON_API/manifest.ym
 # PORTAL_USE_LANGUAGE
 COMMON_API_DIRECTORY=$PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_COMMON_API
 APP_CONFIG=$COMMON_API_DIRECTORY/manifest.yml
-SEARCH_FILTER=$(unzip -q -l ${COMMON_API_DIRECTORY}/paas-ta-portal-common-api.jar | grep "template/" | cut -d "/" -f4 | uniq)
+SEARCH_FILTER=$(unzip -q -l ${COMMON_API_DIRECTORY}/ap-portal-common-api.jar | grep "template/" | cut -d "/" -f4 | uniq)
 
 ORIGIN_LANG=()
 for lang in $SEARCH_FILTER
@@ -451,7 +451,7 @@ find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_STORAGE_API/manifest.y
 # PORTAL_USE_LANGUAGE
 WEB_ADMIN_DIRECTORY=$PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_ADMIN
 APP_CONFIG=$WEB_ADMIN_DIRECTORY/manifest.yml
-SEARCH_FILTER=$(unzip -q -l $WEB_ADMIN_DIRECTORY/paas-ta-portal-webadmin.war | grep "message_" | cut -d "_" -f2)
+SEARCH_FILTER=$(unzip -q -l $WEB_ADMIN_DIRECTORY/ap-portal-webadmin.war | grep "message_" | cut -d "_" -f2)
 BEFORE_LANG_LIST=$(grep "languageList" $APP_CONFIG | sed -e 's/^ *//g')
 
 ORIGIN_LANG=()
@@ -499,8 +499,8 @@ find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/config -type 
 # TAIL_LOG_INTERVAL
 find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/config -type f | xargs sed -i -e 's/<TAIL_LOG_INTERVAL>/'${TAIL_LOG_INTERVAL}'/g'
 
-# PAASTA_DEPLOY_TYPE
-find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/config -type f | xargs sed -i -e 's/<PAASTA_DEPLOY_TYPE>/'${PAASTA_DEPLOYMENT_TYPE}'/g'
+# AP_DEPLOY_TYPE
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/config -type f | xargs sed -i -e 's/<AP_DEPLOY_TYPE>/'${AP_DEPLOYMENT_TYPE}'/g'
 
 # PORTAL_USE_LANGUAGE
 PORTAL_WEB_USER_USE_LANG_LIST=$(echo "[\"${PORTAL_WEB_USER_LANGUAGE[*]}\"]" | sed 's/ /\",\"/g')
@@ -508,10 +508,10 @@ PORTAL_WEB_USER_USE_LANG_LIST=$(echo "[\"${PORTAL_WEB_USER_LANGUAGE[*]}\"]" | se
 find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/config -type f | xargs sed -i -e 's/<PORTAL_USE_LANGUAGE>/'${PORTAL_WEB_USER_USE_LANG_LIST}'/g'
 
 # PORTAL WEBUSER MAIN
-BEFORE_CONFIG=$PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/paas-ta-portal-webuser/assets/resources/env/config.json
+BEFORE_CONFIG=$PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/ap-portal-webuser/assets/resources/env/config.json
 AFTER_CONFIG=$PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/config/config.json
-MAIN_JS=$PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/paas-ta-portal-webuser/main.*.js
-LANG_DIR_PATH=$PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/paas-ta-portal-webuser/assets/i18n
+MAIN_JS=$PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/ap-portal-webuser/main.*.js
+LANG_DIR_PATH=$PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/ap-portal-webuser/assets/i18n
 
 BEFORE_LANG=()
 for file in `ls $LANG_DIR_PATH/*`
@@ -549,7 +549,7 @@ cp $AFTER_CONFIG $BEFORE_CONFIG
 
 #SECURITY GROUP
 find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/portal-rule.json -type f | xargs sed -i -e 's/<PORTAL_DB_IP>/'${PORTAL_DB_IP}'/g'
-find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/portal-rule.json -type f | xargs sed -i -e "s/<PAAS-TA_DB_IP>/$PAASTA_DB_IP/g"
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/portal-rule.json -type f | xargs sed -i -e "s/<AP_DB_IP>/$AP_DB_IP/g"
 
 
 
