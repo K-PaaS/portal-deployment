@@ -2,20 +2,20 @@
 
 source portal-app-variable.yml
 
-PORTALAPPNAME=portal-app-1.2.14
-PORTALAPPDOWNLOADLINK=https://nextcloud.k-paas.org/index.php/s/3m4Ec4isPT7q7gQ/download
+PORTALAPPNAME=portal-app-1.2.14.1
+PORTALAPPDOWNLOADLINK=https://nextcloud.k-paas.org/index.php/s/yzND6SjwiFG8yfy/download
 
 #########################################
 # Portal Component Folder Name
-PORTAL_API=portal-api-2.4.3
-PORTAL_COMMON_API=portal-common-api-2.2.6
-PORTAL_GATEWAY=portal-gateway-2.1.2
-PORTAL_LOG_API=portal-log-api-2.3.2
-PORTAL_REGISTRATION=portal-registration-2.1.0
-PORTAL_STORAGE_API=portal-storage-api-2.2.1
-PORTAL_WEB_ADMIN=portal-web-admin-2.3.5
-PORTAL_WEB_USER=portal-web-user-2.4.10
-PORTAL_SSH=portal-ssh-1.0.0
+PORTAL_API=portal-api-2.4.3.1
+PORTAL_COMMON_API=portal-common-api-2.2.6.1
+PORTAL_GATEWAY=portal-gateway-2.1.2.1
+PORTAL_LOG_API=portal-log-api-2.3.2.1
+PORTAL_REGISTRATION=portal-registration-2.1.0.1
+PORTAL_STORAGE_API=portal-storage-api-2.2.1.1
+PORTAL_WEB_ADMIN=portal-web-admin-2.3.5.1
+PORTAL_WEB_USER=portal-web-user-2.4.10.1
+PORTAL_SSH=portal-ssh-1.0.0.1
 
 #########################################
 # Pre-condition check

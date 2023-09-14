@@ -8,9 +8,9 @@ stemcells:
 
 releases:
 - name: "ap-portal-api-release"                         # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
-  url: https://nextcloud.k-paas.org/index.php/s/QQ7QL9GGK5FgLbY/download
-  sha1: 82af0401c990a0b96fa4cc6d68a5630fee01b221 
-  version: "2.5.18"
+  url: https://nextcloud.k-paas.org/index.php/s/wtZ4d2NzmzsfHPB/download
+  sha1: 3b8018a10de265fe08358981b177a7a481e85886
+  version: "2.5.18.1"
 
 update:
   canaries: 1                                               # canary 인스턴스 수(필수)
