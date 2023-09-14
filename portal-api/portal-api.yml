@@ -7,7 +7,7 @@ stemcells:
     version: "((stemcell_version))"
 
 releases:
-- name: "ap-portal-api-release"                         # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
+- name: "ap-portal-api"                         # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
   url: https://nextcloud.k-paas.org/index.php/s/wtZ4d2NzmzsfHPB/download
   sha1: 3b8018a10de265fe08358981b177a7a481e85886
   version: "2.5.18.1"
@@ -31,7 +31,7 @@ instance_groups:
       - name: ((private_networks_name))
     jobs:
       - name: mariadb
-        release: "ap-portal-api-release"
+        release: "ap-portal-api"
 
   - name: haproxy
     azs: ((haproxy_azs))
@@ -44,7 +44,7 @@ instance_groups:
         static_ips: ((haproxy_public_ips))
     jobs:
       - name: haproxy
-        release: "ap-portal-api-release"
+        release: "ap-portal-api"
     properties:
       infra:
         admin:
@@ -60,7 +60,7 @@ instance_groups:
       - name: ((private_networks_name))
     jobs:
       - name: binary_storage
-        release: "ap-portal-api-release"
+        release: "ap-portal-api"
 
 
   ######## WEB SERVICE ########
@@ -74,7 +74,7 @@ instance_groups:
       - name: ((private_networks_name))
     jobs:
       - name: ap-portal-gateway
-        release: "ap-portal-api-release"
+        release: "ap-portal-api"
     properties:
       java_opts: "-Xmx450m -Xss1M -XX:MaxMetaspaceSize=93382K -XX:ReservedCodeCacheSize=240m -XX:+UseCompressedOops -Djdk.tls.ephemeralDHKeySize=2048 -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Xverify:none -XX:ErrorFile=/var/vcap/sys/log/java_error_in_idea_%p.log -XX:HeapDumpPath=/var/vcap/sys/log/java_error_in_idea.hprof"
 
@@ -87,7 +87,7 @@ instance_groups:
       - name: ((private_networks_name))
     jobs:
       - name: ap-portal-registration
-        release: "ap-portal-api-release"
+        release: "ap-portal-api"
         provides:
           ap-portal-registration-link: {as: portal-registration, shared: true}
     properties:
@@ -107,7 +107,7 @@ instance_groups:
       - name: ((private_networks_name))
     jobs:
       - name: ap-portal-api
-        release: "ap-portal-api-release"
+        release: "ap-portal-api"
     properties:
       java_opts: "-Xmx900m -Xss1M -XX:MaxMetaspaceSize=93382K -XX:ReservedCodeCacheSize=240m -XX:+UseCompressedOops -Djdk.tls.ephemeralDHKeySize=2048 -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Xverify:none -XX:ErrorFile=/var/vcap/sys/log/java_error_in_idea_%p.log -XX:HeapDumpPath=/var/vcap/sys/log/java_error_in_idea.hprof"
       cloudfoundry:
@@ -148,7 +148,7 @@ instance_groups:
       - name: ((private_networks_name))
     jobs:
       - name: ap-portal-common-api
-        release: "ap-portal-api-release"
+        release: "ap-portal-api"
     properties:
       java_opts: "-Xmx450m -Xss1M -XX:MaxMetaspaceSize=93382K -XX:ReservedCodeCacheSize=240m -XX:+UseCompressedOops -Djdk.tls.ephemeralDHKeySize=2048 -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Xverify:none -XX:ErrorFile=/var/vcap/sys/log/java_error_in_idea_%p.log -XX:HeapDumpPath=/var/vcap/sys/log/java_error_in_idea.hprof"
       datasource:
@@ -199,7 +199,7 @@ instance_groups:
       - name: ((private_networks_name))
     jobs:
       - name: ap-portal-storage-api
-        release: "ap-portal-api-release"
+        release: "ap-portal-api"
     properties:
       java_opts: "-Xmx450m -Xss1M -XX:MaxMetaspaceSize=93382K -XX:ReservedCodeCacheSize=240m -XX:+UseCompressedOops -Djdk.tls.ephemeralDHKeySize=2048 -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Xverify:none -XX:ErrorFile=/var/vcap/sys/log/java_error_in_idea_%p.log -XX:HeapDumpPath=/var/vcap/sys/log/java_error_in_idea.hprof"
       objectStorage:
@@ -228,7 +228,7 @@ instance_groups:
       - name: ((private_networks_name))
     jobs:
       - name: ap-portal-log-api
-        release: "ap-portal-api-release"
+        release: "ap-portal-api"
     properties:
       java_opts: "-Xmx450m -Xss1M -XX:MaxMetaspaceSize=93382K -XX:ReservedCodeCacheSize=240m -XX:+UseCompressedOops -Djdk.tls.ephemeralDHKeySize=2048 -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Xverify:none -XX:ErrorFile=/var/vcap/sys/log/java_error_in_idea_%p.log -XX:HeapDumpPath=/var/vcap/sys/log/java_error_in_idea.hprof"
       influxdb:

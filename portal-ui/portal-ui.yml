@@ -7,7 +7,7 @@ stemcells:
   version: ((stemcell_version))
 
 releases:
-- name: ap-portal-ui-release                          # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
+- name: ap-portal-ui                          # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
   url: https://nextcloud.k-paas.org/index.php/s/Wt7H55w5Y4bfbYX/download
   sha1: a9a73c05077bb4432b730f968305eb6deccaeae0
   version: "2.5.16.1"
@@ -31,7 +31,7 @@ instance_groups:
   - name: ((private_networks_name))
   jobs:
   - name: mariadb
-    release: ap-portal-ui-release
+    release: ap-portal-ui
 
 - name: haproxy
   azs: ((haproxy_azs))
@@ -44,7 +44,7 @@ instance_groups:
     static_ips: ((haproxy_public_ips))
   jobs:
   - name: haproxy
-    release: ap-portal-ui-release
+    release: ap-portal-ui
   properties:
     infra:
       admin:
@@ -61,7 +61,7 @@ instance_groups:
   - name: ((private_networks_name))
   jobs:
   - name: ap-portal-webadmin
-    release: ap-portal-ui-release
+    release: ap-portal-ui
   properties:
     java_opts: "-Xmx450m -Xss1M -XX:MaxMetaspaceSize=93382K -XX:ReservedCodeCacheSize=240m -XX:+UseCompressedOops -Djdk.tls.ephemeralDHKeySize=2048 -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Xverify:none -XX:ErrorFile=/var/vcap/sys/log/java_error_in_idea_%p.log -XX:HeapDumpPath=/var/vcap/sys/log/java_error_in_idea.hprof"
     api:
@@ -78,7 +78,7 @@ instance_groups:
   - name: ((private_networks_name))
   jobs:
   - name: ap-portal-webuser
-    release: ap-portal-ui-release
+    release: ap-portal-ui
   properties:
     logPath: "/var/vcap/sys/log/ap-portal-webuser"     # WEBUSER는 아파치를 사용함, APACHE 로그 위치
     webDir: "/var/vcap/packages/apache2/htdocs"             # WEBUSER는 아파치를 사용함, APACHE 웹 디렉토리 설정

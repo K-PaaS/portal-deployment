@@ -7,7 +7,7 @@ stemcells:
   version: "((stemcell_version))"
 
 releases:
-- name: "ap-portal-api-release"                         # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
+- name: "ap-portal-api"                         # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
   url: https://nextcloud.k-paas.org/index.php/s/gzqpisBXiybtYtG/download
   sha1: 329a7563f462776bf013552f039141ac84557511
   version: "2.5.18.1-ctn"                                        # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
@@ -31,7 +31,7 @@ instance_groups:
     default: [dns, gateway]
   jobs:
   - name: mariadb
-    release: "ap-portal-api-release"
+    release: "ap-portal-api"
     properties:
       mariadb:
         port: ((mariadb_port))
@@ -45,7 +45,7 @@ instance_groups:
         desc: "((portal_default_api_desc))"
 
   - name: binary_storage
-    release: "ap-portal-api-release"
+    release: "ap-portal-api"
     properties:
       binary_storage:
         proxy_port: 10008
