@@ -23,6 +23,9 @@ MAIL_SMTP_USERNAME="kpaas"				# Mail-SMTP User Name
 MAIL_SMTP_PASSWORD="kpaas"				# Mail-SMTP Password
 MAIL_SMTP_USEREMAIL="kpaas@gmail.com"			# Mail-SMTP User Email
 
+SPRING_SECURITY_USERNAME="admin"                        # Spring Security Username
+SPRING_SECURITY_PASSWORD="openkpaas"                    # Spring Security Password
+
 ##PORTAL APP INSTANCES
 PORTAL_API_INSTANCE=1					# PORTAL-API INSTANCES
 PORTAL_COMMON_API_INSTANCE=1				# PORTAL-COMMON-API INSTANCES

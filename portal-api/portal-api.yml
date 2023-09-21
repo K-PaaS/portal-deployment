@@ -9,7 +9,7 @@ stemcells:
 releases:
 - name: "ap-portal-api-release"                         # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
   url: https://nextcloud.k-paas.org/index.php/s/QQ7QL9GGK5FgLbY/download
-  sha1: 82af0401c990a0b96fa4cc6d68a5630fee01b221 
+  sha1: 1e565317eb833ae8efa7e1ab42ad8c7b06ab52c4 
   version: "2.5.18"
 
 update:
@@ -109,6 +109,8 @@ instance_groups:
       - name: ap-portal-api
         release: "ap-portal-api-release"
     properties:
+      portal_default:
+        header_auth: "((portal_default_header_auth))"
       java_opts: "-Xmx900m -Xss1M -XX:MaxMetaspaceSize=93382K -XX:ReservedCodeCacheSize=240m -XX:+UseCompressedOops -Djdk.tls.ephemeralDHKeySize=2048 -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Xverify:none -XX:ErrorFile=/var/vcap/sys/log/java_error_in_idea_%p.log -XX:HeapDumpPath=/var/vcap/sys/log/java_error_in_idea.hprof"
       cloudfoundry:
         cc:
@@ -150,6 +152,8 @@ instance_groups:
       - name: ap-portal-common-api
         release: "ap-portal-api-release"
     properties:
+      portal_default:
+        header_auth: "((portal_default_header_auth))"
       java_opts: "-Xmx450m -Xss1M -XX:MaxMetaspaceSize=93382K -XX:ReservedCodeCacheSize=240m -XX:+UseCompressedOops -Djdk.tls.ephemeralDHKeySize=2048 -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Xverify:none -XX:ErrorFile=/var/vcap/sys/log/java_error_in_idea_%p.log -XX:HeapDumpPath=/var/vcap/sys/log/java_error_in_idea.hprof"
       datasource:
         cc:
@@ -243,6 +247,10 @@ instance_groups:
           enabled: ((log_api_influxdb_https_enabled))
 
 properties:
+  portal_default:
+    security:
+      username: ((portal_default_security_username))
+      password: ((portal_default_security_password))
   mariadb:                                                  # MARIA DB SERVER 설정 정보
     port: ((mariadb_port))                                  # MARIA DB PORT 번호
     admin_user:

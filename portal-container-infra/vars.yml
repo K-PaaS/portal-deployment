@@ -17,7 +17,7 @@ mariadb_port: "<MARIADB_PORT>"                                  # mariadb : data
 mariadb_admin_password: "<MARIADB_ADMIN_PASSWORD>"              # mariadb : database admin password (e.g. "Kpaas@2019")
 portal_default_api_name: "K-PaaS"                              # portal default api name (e.g. K-PaaS {Version})
 portal_default_api_url: "http://<PORTAL_GATEWAY_ROUTE>"         # portal default api url (portal gateway url) (e.g. "http://portal-gateway.<DOMAIN>")
-portal_default_header_auth: "Basic YWRtaW46b3BlbnBhYXN0YQ=="    # portal default header auth
+portal_default_header_auth: "Basic YWRtaW46b3BlbmtwYWFzCg=="    # portal default header auth
 portal_default_api_desc: "K-PaaS infra"                        # portal default api description (e.g. K-PaaS {Version} infra)
 
 
