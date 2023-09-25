@@ -39,7 +39,7 @@ ssh_enable: true                                                         # webus
 ap_deployment_type: "ap"                                                 # ETC : Application Platform deployment type (ap, sidecar)
 portal_default_api_name: "K-PaaS"                                        # ETC : default api name (e.g. K-PaaS {Version})
 portal_default_api_url: "http://<PORTAL-API-HAPROXY-PUBLIC-IP>:2225"     # ETC : default api url
-portal_default_header_auth: "Basic YWRtaW46b3BlbmtwYWFzCg=="             # ETC : default header auth
+portal_default_header_auth: "Basic YWRtaW46b3BlbmtwYWFz"                 # ETC : default header auth
 portal_default_api_desc: "K-PaaS infra"                                  # ETC : default api description (e.g. K-PaaS {Version} infra)
 apache_limit_request_body: <APACHE limitRequestBody>                     # Apache Limiting Upload File Size Directory / ex> 5000000
 apache_usr_limit_request_body: <APACHE limitRequestBody>                 # Apache Limiting Upload File Size Directory webDir ex> 10240000

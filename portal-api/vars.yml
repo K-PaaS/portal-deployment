@@ -91,4 +91,4 @@ mail_smtp_properties_subject: "<MAIL_SMTP_PROPERTIES_SUBJECT>"  # mail-smtp : pr
 # ETC INFO
 portal_default_security_username: "admin"                       # ETC : spring security username
 portal_default_security_password: "openkpaas"                   # ETC : spring security password
-portal_default_header_auth: "Basic YWRtaW46b3BlbmtwYWFzCg=="    # ETC : default header auth (spring security id:password(base64))
+portal_default_header_auth: "Basic YWRtaW46b3BlbmtwYWFz"        # ETC : default header auth (spring security id:password(base64))
