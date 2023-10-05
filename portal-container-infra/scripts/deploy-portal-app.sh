@@ -194,7 +194,7 @@ fi
 
 UAAC_PORTAL_CLIENT_SECRET=$(grep -r "uaa_client_portal_secret" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -f 1 | sed -e 's/ //g' | sed -e 's/\"//g')
 
-HEADER_AUTH=$(grep -r "portal_default_header_auth" $PORTAL_INFRA_VARS_PATH | cut -d ':' -f 2 | cut -d " " -f 2 | sed -e 's/ //g' | sed -e 's/\"//g')
+HEADER_AUTH=$(grep -r "portal_default_header_auth" $PORTAL_INFRA_VARS_PATH  | cut -d '"' -f 2 )
 
 #########################################
 
