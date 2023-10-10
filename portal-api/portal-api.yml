@@ -7,10 +7,10 @@ stemcells:
     version: "((stemcell_version))"
 
 releases:
-- name: "paasta-portal-api-release"                         # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
-  url: https://nextcloud.paas-ta.org/index.php/s/QQ7QL9GGK5FgLbY/download
-  sha1: 82af0401c990a0b96fa4cc6d68a5630fee01b221 
-  version: "2.5.18"
+- name: "ap-portal-api"                         # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
+  url: https://nextcloud.k-paas.org/index.php/s/wtZ4d2NzmzsfHPB/download
+  sha1: 817a4f7a58c9039a67068c077fcd9628a82ab3ea
+  version: "2.5.18.1"
 
 update:
   canaries: 1                                               # canary 인스턴스 수(필수)
@@ -31,7 +31,7 @@ instance_groups:
       - name: ((private_networks_name))
     jobs:
       - name: mariadb
-        release: "paasta-portal-api-release"
+        release: "ap-portal-api"
 
   - name: haproxy
     azs: ((haproxy_azs))
@@ -44,7 +44,7 @@ instance_groups:
         static_ips: ((haproxy_public_ips))
     jobs:
       - name: haproxy
-        release: "paasta-portal-api-release"
+        release: "ap-portal-api"
     properties:
       infra:
         admin:
@@ -60,12 +60,12 @@ instance_groups:
       - name: ((private_networks_name))
     jobs:
       - name: binary_storage
-        release: "paasta-portal-api-release"
+        release: "ap-portal-api"
 
 
   ######## WEB SERVICE ########
 
-  - name: paas-ta-portal-gateway
+  - name: ap-portal-gateway
     azs: ((gateway_azs))
     instances: ((gateway_instances))
     vm_type: ((gateway_vm_type))
@@ -73,12 +73,12 @@ instance_groups:
     networks:
       - name: ((private_networks_name))
     jobs:
-      - name: paas-ta-portal-gateway
-        release: "paasta-portal-api-release"
+      - name: ap-portal-gateway
+        release: "ap-portal-api"
     properties:
       java_opts: "-Xmx450m -Xss1M -XX:MaxMetaspaceSize=93382K -XX:ReservedCodeCacheSize=240m -XX:+UseCompressedOops -Djdk.tls.ephemeralDHKeySize=2048 -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Xverify:none -XX:ErrorFile=/var/vcap/sys/log/java_error_in_idea_%p.log -XX:HeapDumpPath=/var/vcap/sys/log/java_error_in_idea.hprof"
 
-  - name: paas-ta-portal-registration
+  - name: ap-portal-registration
     azs: ((registration_azs))
     instances: ((registration_instances))
     vm_type: ((registration_vm_type))
@@ -86,10 +86,10 @@ instance_groups:
     networks:
       - name: ((private_networks_name))
     jobs:
-      - name: paas-ta-portal-registration
-        release: "paasta-portal-api-release"
+      - name: ap-portal-registration
+        release: "ap-portal-api"
         provides:
-          paas-ta-portal-registration-link: {as: portal-registration, shared: true}
+          ap-portal-registration-link: {as: portal-registration, shared: true}
     properties:
       java_opts: "-Xmx450m -Xss1M -XX:MaxMetaspaceSize=93382K -XX:ReservedCodeCacheSize=240m -XX:+UseCompressedOops -Djdk.tls.ephemeralDHKeySize=2048 -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Xverify:none -XX:ErrorFile=/var/vcap/sys/log/java_error_in_idea_%p.log -XX:HeapDumpPath=/var/vcap/sys/log/java_error_in_idea.hprof"
       infra:
@@ -98,7 +98,7 @@ instance_groups:
       server:
         port: 2221
 
-  - name: paas-ta-portal-api
+  - name: ap-portal-api
     azs: ((api_azs))
     instances: ((api_instances))
     vm_type: ((api_vm_type))
@@ -106,9 +106,11 @@ instance_groups:
     networks:
       - name: ((private_networks_name))
     jobs:
-      - name: paas-ta-portal-api
-        release: "paasta-portal-api-release"
+      - name: ap-portal-api
+        release: "ap-portal-api"
     properties:
+      portal_default:
+        header_auth: "((portal_default_header_auth))"
       java_opts: "-Xmx900m -Xss1M -XX:MaxMetaspaceSize=93382K -XX:ReservedCodeCacheSize=240m -XX:+UseCompressedOops -Djdk.tls.ephemeralDHKeySize=2048 -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Xverify:none -XX:ErrorFile=/var/vcap/sys/log/java_error_in_idea_%p.log -XX:HeapDumpPath=/var/vcap/sys/log/java_error_in_idea.hprof"
       cloudfoundry:
         cc:
@@ -119,8 +121,8 @@ instance_groups:
             sslSkipValidation: true
         user: # CloudFoundry Login information
           admin:
-            username: ((paasta_admin_username))
-            password: ((paasta_admin_password))
+            username: ((ap_admin_username))
+            password: ((ap_admin_password))
           uaaClient:
             clientId: admin
             clientSecret: ((uaa_client_admin_secret))
@@ -139,7 +141,7 @@ instance_groups:
         admin:
           enable: ((api_infra_admin))
 
-  - name: paas-ta-portal-common-api
+  - name: ap-portal-common-api
     azs: ((common_api_azs))
     instances: ((common_api_instances))
     vm_type: ((common_api_vm_type))
@@ -147,25 +149,27 @@ instance_groups:
     networks:
       - name: ((private_networks_name))
     jobs:
-      - name: paas-ta-portal-common-api
-        release: "paasta-portal-api-release"
+      - name: ap-portal-common-api
+        release: "ap-portal-api"
     properties:
+      portal_default:
+        header_auth: "((portal_default_header_auth))"
       java_opts: "-Xmx450m -Xss1M -XX:MaxMetaspaceSize=93382K -XX:ReservedCodeCacheSize=240m -XX:+UseCompressedOops -Djdk.tls.ephemeralDHKeySize=2048 -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Xverify:none -XX:ErrorFile=/var/vcap/sys/log/java_error_in_idea_%p.log -XX:HeapDumpPath=/var/vcap/sys/log/java_error_in_idea.hprof"
       datasource:
         cc:
-          driver-class-name: ((paasta_database_driver_class))
-          url: jdbc:((paasta_database_type))://((paasta_database_ips)):((paasta_database_port))/((paasta_cc_db_id))
-          username: ((paasta_cc_db_id))
-          password: ((paasta_cc_db_password))
+          driver-class-name: ((ap_database_driver_class))
+          url: jdbc:((ap_database_type))://((ap_database_ips)):((ap_database_port))/((ap_cc_db_id))
+          username: ((ap_cc_db_id))
+          password: ((ap_cc_db_password))
         portal:
           driver-class-name: org.mariadb.jdbc.Driver
           username: root
           password: "((mariadb_admin_password))"
         uaa:
-          driver-class-name: ((paasta_database_driver_class))
-          url: jdbc:((paasta_database_type))://((paasta_database_ips)):((paasta_database_port))/((paasta_uaa_db_id))
-          username: ((paasta_uaa_db_id))
-          password: ((paasta_uaa_db_password))
+          driver-class-name: ((ap_database_driver_class))
+          url: jdbc:((ap_database_type))://((ap_database_ips)):((ap_database_port))/((ap_uaa_db_id))
+          username: ((ap_uaa_db_id))
+          password: ((ap_uaa_db_password))
       mail:
         smtp:
           host: ((mail_smtp_host))
@@ -190,7 +194,7 @@ instance_groups:
           enable: ((common_api_infra_admin))
       languageList: ((portal_web_user_language))
 
-  - name: paas-ta-portal-storage-api
+  - name: ap-portal-storage-api
     azs: ((storage_api_azs))
     instances: ((storage_api_instances))
     vm_type: ((storage_api_vm_type))
@@ -198,8 +202,8 @@ instance_groups:
     networks:
       - name: ((private_networks_name))
     jobs:
-      - name: paas-ta-portal-storage-api
-        release: "paasta-portal-api-release"
+      - name: ap-portal-storage-api
+        release: "ap-portal-api"
     properties:
       java_opts: "-Xmx450m -Xss1M -XX:MaxMetaspaceSize=93382K -XX:ReservedCodeCacheSize=240m -XX:+UseCompressedOops -Djdk.tls.ephemeralDHKeySize=2048 -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Xverify:none -XX:ErrorFile=/var/vcap/sys/log/java_error_in_idea_%p.log -XX:HeapDumpPath=/var/vcap/sys/log/java_error_in_idea.hprof"
       objectStorage:
@@ -219,7 +223,7 @@ instance_groups:
         admin:
           enable: ((storage_api_infra_admin))
 
-  - name : paas-ta-portal-log-api
+  - name : ap-portal-log-api
     azs: ((log_api_azs))
     instances: ((log_api_instances))
     vm_type: ((log_api_vm_type))
@@ -227,8 +231,8 @@ instance_groups:
     networks:
       - name: ((private_networks_name))
     jobs:
-      - name: paas-ta-portal-log-api
-        release: "paasta-portal-api-release"
+      - name: ap-portal-log-api
+        release: "ap-portal-api"
     properties:
       java_opts: "-Xmx450m -Xss1M -XX:MaxMetaspaceSize=93382K -XX:ReservedCodeCacheSize=240m -XX:+UseCompressedOops -Djdk.tls.ephemeralDHKeySize=2048 -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Xverify:none -XX:ErrorFile=/var/vcap/sys/log/java_error_in_idea_%p.log -XX:HeapDumpPath=/var/vcap/sys/log/java_error_in_idea.hprof"
       influxdb:
@@ -243,6 +247,10 @@ instance_groups:
           enabled: ((log_api_influxdb_https_enabled))
 
 properties:
+  portal_default:
+    security:
+      username: ((portal_default_security_username))
+      password: ((portal_default_security_password))
   mariadb:                                                  # MARIA DB SERVER 설정 정보
     port: ((mariadb_port))                                  # MARIA DB PORT 번호
     admin_user:

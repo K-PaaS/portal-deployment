@@ -7,10 +7,10 @@ stemcells:
   version: "((stemcell_version))"
 
 releases:
-- name: "paasta-portal-api-release"                         # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
-  url: https://nextcloud.paas-ta.org/index.php/s/TxdRqGHbsipkBim/download
-  sha1: 89f57ebdd3556ef053fcb879b183d8395d0f2892
-  version: "2.5.18-ctn"                                        # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
+- name: "ap-portal-api"                         # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
+  url: https://nextcloud.k-paas.org/index.php/s/gzqpisBXiybtYtG/download
+  sha1: d04cd7de77f630a8a90ccd11494b1812e7fd3d9e
+  version: "2.5.18.1-ctn"                                        # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
 
 update:
   canaries: 1                                               # canary 인스턴스 수(필수)
@@ -31,7 +31,7 @@ instance_groups:
     default: [dns, gateway]
   jobs:
   - name: mariadb
-    release: "paasta-portal-api-release"
+    release: "ap-portal-api"
     properties:
       mariadb:
         port: ((mariadb_port))
@@ -45,7 +45,7 @@ instance_groups:
         desc: "((portal_default_api_desc))"
 
   - name: binary_storage
-    release: "paasta-portal-api-release"
+    release: "ap-portal-api"
     properties:
       binary_storage:
         proxy_port: 10008

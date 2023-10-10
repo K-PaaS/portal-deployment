@@ -12,16 +12,19 @@ MONITORING_ENABLE=false					# Monitoring Enable Option
 SSH_ENABLE=true						# SSH Enable Option
 TAIL_LOG_INTERVAL=250					# tail log interval (ms)
 
-PORTAL_ORG_NAME="portal"				# PaaS-TA Portal Org Name
-PORTAL_SPACE_NAME="system"				# PaaS-TA Portal Space Name
-PORTAL_QUOTA_NAME="portal_quota"			# PaaS-TA Portal Quota Name
-PORTAL_SECURITY_GROUP_NAME="portal"			# PaaS-TA Portal Security Group Name
+PORTAL_ORG_NAME="portal"				# Application Platform Portal Org Name
+PORTAL_SPACE_NAME="system"				# Application Platform Portal Space Name
+PORTAL_QUOTA_NAME="portal_quota"			# Application Platform Portal Quota Name
+PORTAL_SECURITY_GROUP_NAME="portal"			# Application Platform Portal Security Group Name
 
 MAIL_SMTP_HOST="smtp.gmail.com"				# Mail-SMTP Host
 MAIL_SMTP_PORT="465"					# Mail-SMTP Port
-MAIL_SMTP_USERNAME="paasta"				# Mail-SMTP User Name
-MAIL_SMTP_PASSWORD="paasta"				# Mail-SMTP Password
-MAIL_SMTP_USEREMAIL="paas-ta@gmail.com"			# Mail-SMTP User Email
+MAIL_SMTP_USERNAME="kpaas"				# Mail-SMTP User Name
+MAIL_SMTP_PASSWORD="kpaas"				# Mail-SMTP Password
+MAIL_SMTP_USEREMAIL="kpaas@gmail.com"			# Mail-SMTP User Email
+
+SPRING_SECURITY_USERNAME="admin"                        # Spring Security Username
+SPRING_SECURITY_PASSWORD="openkpaas"                    # Spring Security Password
 
 ##PORTAL APP INSTANCES
 PORTAL_API_INSTANCE=1					# PORTAL-API INSTANCES
@@ -34,22 +37,22 @@ PORTAL_WEB_USER_INSTANCE=1				# PORTAL-WEB-USER INSTANCES
 
 
 ##UNCHANGE VARIABLE(if defulat install, don't change variable)
-PAASTA_DEPLOYMENT_TYPE="ap"                             # PaaS TA Deployment Type
-PAASTA_CORE_DEPLOYMENT_NAME="paasta"			# PaaS TA AP Deployment Name
+AP_DEPLOYMENT_TYPE="ap"                             # Application Platform Deployment Type
+AP_CORE_DEPLOYMENT_NAME="ap"			# Application Platform Deployment Name
 PORTAL_INFRA_DEPLOYMENT_NAME="portal-container-infra"	# Portal Container Infra Deployment Name
-PAASTA_DATABASE_INSTANCE_NAME="database"		# PaaS TA AP Database Instance Name
+AP_DATABASE_INSTANCE_NAME="database"		# Application Platform Database Instance Name
 PORTAL_INFRA_DATABASE_NAME="infra"			# Portal Container Infra Database Name
 UAA_ADMIN_CLIENT_ID="admin"				# UAA Client ID
-CC_DB_NAME="cloud_controller"				# PaaS-TA AP CCDB Name
-CC_DB_USER_NAME="cloud_controller"			# PaaS-TA AP CCDB ID
-UAA_DB_NAME="uaa"					# PaaS-TA AP UAADB Name
-UAA_DB_USER_NAME="uaa"					# PaaS-TA AP UAADB ID
+CC_DB_NAME="cloud_controller"				# Application Platform CCDB Name
+CC_DB_USER_NAME="cloud_controller"			# Application Platform CCDB ID
+UAA_DB_NAME="uaa"					# Application Platform UAADB Name
+UAA_DB_USER_NAME="uaa"					# Application Platform UAADB ID
 UAAC_PORTAL_CLIENT_ID="portalclient"			# UAAC Portal Client ID
 
-IS_PAAS_TA_EXTERNAL_DB=false				# (true or false)
-PAAS_TA_EXTERNAL_DB_IP=					# PaaS-TA AP External DB IP
-PAAS_TA_EXTERNAL_DB_PORT=				# PaaS-TA AP External DB Port
-PAAS_TA_EXTERNAL_DB_KIND=				# PaaS-TA AP External DB Kind(IF USE e.g. postgres or mysql)
+IS_AP_EXTERNAL_DB=false				# (true or false)
+AP_EXTERNAL_DB_IP=					# Application Platform External DB IP
+AP_EXTERNAL_DB_PORT=				# Application Platform External DB Port
+AP_EXTERNAL_DB_KIND=				# Application Platform External DB Kind(IF USE e.g. postgres or mysql)
 IS_PORTAL_EXTERNAL_DB=false				# (true or false)
 PORTAL_EXTERNAL_DB_IP=					# Portal External DB IP
 PORTAL_EXTERNAL_DB_PORT=				# Portal External DB Port
@@ -65,7 +68,7 @@ USE_LOGGING_SERVICE=false                               # (true or false)
 LOGGING_INFLUXDB_IP=10.0.1.115                          # Logging Service InfluxDB IP
 LOGGING_INFLUXDB_PORT=8086                              # Logging Service InfluxDB HTTP PORT
 LOGGING_INFLUXDB_USERNAME="admin"                       # Logging Service InfluxDB Username
-LOGGING_INFLUXDB_PASSWORD="PaaS-TA2022"                 # Logging Service InfluxDB Password
+LOGGING_INFLUXDB_PASSWORD="K-PaaS2022"                 # Logging Service InfluxDB Password
 LOGGING_INFLUXDB_DATABASE="logging_db"                  # Logging Service InfluxDB DB Name
 LOGGING_INFLUXDB_MEASUREMNET="logging_measurement"      # Logging Service InfluxDB Measurement Name
 LOGGING_INFLUXDB_LIMIT=50                               # Logging Service InfluxDB query limit
