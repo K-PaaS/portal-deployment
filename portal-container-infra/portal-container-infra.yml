@@ -9,7 +9,7 @@ stemcells:
 releases:
 - name: "ap-portal-api"                         # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
   url: https://nextcloud.k-paas.org/index.php/s/E3D8dHSqxBSo5Qp/download
-  sha1: 4e482d19b15b5eda4938d8376261cc88795c4025
+  sha1: 26b40a68bee8ada64f430c9defa8de1598fed25e
   version: "2.5.19-ctn"                                        # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
 
 update:
