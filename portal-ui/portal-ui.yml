@@ -9,7 +9,7 @@ stemcells:
 releases:
 - name: ap-portal-ui                          # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
   url: https://nextcloud.k-paas.org/index.php/s/enB5YrCFTff6sPa/download
-  sha1: 1c8454f9afa4369b58111785194f0468408a8be3 
+  sha1: 5b37575bcdb2a4632e43eefdba1f88dcbf116cdb 
   version: "2.5.17"
 
 update:
